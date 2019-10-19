@@ -1,19 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'lib-multi-slides',
-  template: `
-    <p>
-      multi-slides works!
-    </p>
-  `,
+  selector: 'ionic-multi-slides',
+  templateUrl: './multi-slides.component.html',
   styles: []
 })
 export class MultiSlidesComponent implements OnInit {
+  public slides = [1, 2, 3, 4];
+  constructor() {
+    console.log('slides ', this.slides)
 
-  constructor() { }
+  }
 
   ngOnInit() {
+    console.log('slides ', this.slides)
+
   }
 
 }
