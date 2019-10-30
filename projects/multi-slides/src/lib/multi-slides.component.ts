@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, ComponentFactoryResolver, ViewChild, ViewChildren, QueryList, ViewContainerRef } from '@angular/core';
+import { SlideHostDirective } from './slide-host.directive';
 
 @Component({
   selector: 'ionic-multi-slides',
@@ -6,14 +7,20 @@ import { Component, OnInit } from '@angular/core';
   styles: []
 })
 export class MultiSlidesComponent implements OnInit {
-  public slides = [1, 2, 3, 4];
-  constructor() {
-    console.log('slides ', this.slides)
+  @Input() components: Array<any>;
+  @ViewChild(SlideHostDirective) slideHostDirective: SlideHostDirective;
+  constructor(private componentFactoryResolver: ComponentFactoryResolver) {
 
   }
-
-  ngOnInit() {
-    console.log('slides ', this.slides)
+  ngOnInit() { }
+  ngAfterViewInit() {
+    console.log('slides ', this.slideHostDirective, this.components)
+    this.components.forEach((item, index) => {
+      const cf = this.componentFactoryResolver.resolveComponentFactory(this.components[index]);
+      const vcr = this.slideHostDirective.viewContainerRef;
+      vcr.clear();
+      vcr.createComponent(cf);
+    });
 
   }
 
